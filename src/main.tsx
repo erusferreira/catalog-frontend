@@ -2,9 +2,10 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from "./App";
 import "./index.css";
 import { ROUTES } from "routes";
+import App from "./App";
+import Main from "@pages/Main";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES.CATALOG,
-    element: <div>Estou logado!</div>,
+    element: <Main />,
   },
   {
     path: ROUTES.FORGOT_PASSWORD,

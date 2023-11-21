@@ -24,11 +24,16 @@ export default function Form() {
       const url = APIConfig.LOGIN?.POST();
       const { data } = await http.post(url, payload);
       if (data) {
-        return navigate(ROUTES.CATALOG);
+        login({ data });
       }
     } catch (error) {
       throw new Error(`Erro ao realizar login: ${error}`);
     }
+  };
+
+  const login = (user: any) => {
+    localStorage.setItem("user", JSON.stringify(user.data));
+    return navigate(ROUTES.CATALOG);
   };
 
   return (
