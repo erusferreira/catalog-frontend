@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+## Objetivo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório é parte de uma arquitetura de catálogo, projeto que faz parte de uma ação de PDI para aprimorar os conhecimentos de profundidade técnica utilizando tecnologias frontend e backend.
+O objetivo é construir um produto responsável pela gestão do catálogo e também permitir o compartilhamento deste catálogo com clientes.
+O projeto deverá ter ao menos 2 microserviços em tecnologias distintas, 2 clients frontend, banco de dados, deverá utilizar alguma plataforma de stream de eventos. [Esta aplicação encontra-se em construção]
 
-Currently, two official plugins are available:
+## Catalog Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Esta aplicação trata-se do host dos microfrontends de Catálogo e ela é a responsável pela autenticação e pelo carregamento dos outros frontends. Software desenvolvido utilizando React.
 
-## Expanding the ESLint configuration
+## Requisitos do sistema
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+NodeJS >= 20.9.0
+npm >= v10.1.0
 
-- Configure the top-level `parserOptions` property like this:
+## Instalação
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Na pasta raíz execute o comando: `npm install`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Executar aplicação
+
+Na pasta raíz execute o comando: `npm run dev`
