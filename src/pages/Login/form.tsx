@@ -1,24 +1,35 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { schemaLogin } from "./validator";
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import { LoginInputs } from "@apptypes/loginType";
+import { APIConfig } from "@config/api.config.constant";
+import { http } from "@config/axios.config";
+import { ROUTES } from "routes";
 
 export default function Form() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<LoginInputs>({
     resolver: yupResolver(schemaLogin),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<LoginInputs> = async (payload) => {
+    try {
+      const url = APIConfig.LOGIN?.POST();
+      const { data } = await http.post(url, payload);
+      if (data) {
+        return navigate(ROUTES.CATALOG);
+      }
+    } catch (error) {
+      throw new Error(`Erro ao realizar login: ${error}`);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -54,7 +65,7 @@ export default function Form() {
           <div className="text-sm">
             <Link
               className="font-semibold text-indigo-600 hover:text-indigo-500"
-              to="/auth/forgot"
+              to={ROUTES.FORGOT_PASSWORD}
             >
               Esqueceu a senha?
             </Link>
