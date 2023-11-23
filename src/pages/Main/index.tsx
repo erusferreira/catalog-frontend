@@ -1,3 +1,5 @@
+import CatalogAdmin from "remoteApp/CatalogAdmin";
+
 export default function Main() {
   return (
     <>
@@ -83,6 +85,8 @@ export default function Main() {
           </div>
         </div>
       </nav>
+
+      <CatalogAdmin />
     </>
   );
 }
