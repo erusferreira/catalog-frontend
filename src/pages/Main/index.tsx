@@ -1,6 +1,19 @@
 import CatalogAdmin from "remoteApp/CatalogAdmin";
+import { useToken } from "remoteApp/store";
 
 export default function Main() {
+
+  const [token, setToken] = useToken();
+
+  try {
+    if (localStorage.getItem('user') && localStorage.getItem('user') !== null) {
+      const parseUser = JSON.parse(localStorage.getItem('user'));
+      setToken(parseUser.token);
+    }
+  } catch (error) {
+    throw new Error(`Erro ao carregar catálogos: ${error}`);
+  }
+
   return (
     <>
       <nav className="bg-gray-800">
@@ -85,8 +98,7 @@ export default function Main() {
           </div>
         </div>
       </nav>
-
-      <CatalogAdmin />
+      <CatalogAdmin auth={token}/>
     </>
   );
 }
