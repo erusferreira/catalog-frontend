@@ -7,6 +7,7 @@ import { LoginInputs } from "@apptypes/loginType";
 import { APIConfig } from "@config/api.config.constant";
 import { http } from "@config/axios.config";
 import { ROUTES } from "routes";
+import { localStorageService } from "services/localstorage-service";
 
 export default function Form() {
 
@@ -33,7 +34,8 @@ export default function Form() {
   };
 
   const login = (user: any) => {
-    localStorage.setItem("user", JSON.stringify(user.data));
+    const lsService = localStorageService();
+    lsService.setToken("user", user.data);
     return navigate(ROUTES.CATALOG);
   };
 
