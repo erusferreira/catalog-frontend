@@ -1,14 +1,23 @@
+import { Link, useNavigate } from "react-router-dom";
 import CatalogAdmin from "remoteApp/CatalogAdmin";
 import { useToken } from "remoteApp/store";
 
+import { localStorageService } from "services/localstorage-service";
+import { ROUTES } from "routes";
+
 export default function Main() {
+
+  const navigate = useNavigate();
 
   const [token, setToken] = useToken();
 
   try {
-    if (localStorage.getItem('user') && localStorage.getItem('user') !== null) {
-      const parseUser = JSON.parse(localStorage.getItem('user'));
-      setToken(parseUser.token);
+    const lsService = localStorageService();
+    const savedToken = lsService.getToken('user')
+    if (savedToken) {
+      setToken(savedToken.token);
+    } else {
+      return navigate(ROUTES.LOGIN);
     }
   } catch (error) {
     throw new Error(`Erro ao carregar catálogos: ${error}`);
@@ -98,7 +107,7 @@ export default function Main() {
           </div>
         </div>
       </nav>
-      <CatalogAdmin auth={token}/>
+      <CatalogAdmin/>
     </>
   );
 }
