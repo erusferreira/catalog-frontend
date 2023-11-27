@@ -14,9 +14,14 @@ export const localStorageService = () => {
     return !!(localStorage.getItem(key) && localStorage.getItem(key) !== null);
   }
 
+  const clear = () => {
+    localStorage.clear();
+  }
+
   return {
     setToken, 
     getToken,
-    isTokenSaved
+    isTokenSaved, 
+    clear
   }
 }

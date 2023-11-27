@@ -1,18 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CatalogAdmin from "remoteApp/CatalogAdmin";
-import { useToken } from "remoteApp/store";
+import { useToken, useAuthorized } from "remoteApp/store";
 
 import { localStorageService } from "services/localstorage-service";
 import { ROUTES } from "routes";
+import { useState } from "react";
 
 export default function Main() {
 
+  const [ toggleMenu, setToggleMenu ] = useState(false);
   const navigate = useNavigate();
-
-  const [token, setToken] = useToken();
+  const [ , setToken ] = useToken();
+  const [ authorized ] = useAuthorized();
+  const lsService = localStorageService();
 
   try {
-    const lsService = localStorageService();
     const savedToken = lsService.getToken('user')
     if (savedToken) {
       setToken(savedToken.token);
@@ -21,6 +23,15 @@ export default function Main() {
     }
   } catch (error) {
     throw new Error(`Erro ao carregar catálogos: ${error}`);
+  }
+
+  const logout = () => {
+    lsService.clear();
+    navigate(ROUTES.LOGIN)
+  }
+
+  if (!authorized) {
+    logout();
   }
 
   return (
@@ -75,6 +86,7 @@ export default function Main() {
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
+                    onClick={() => setToggleMenu(!toggleMenu)}
                   >
                     <img
                       className="h-8 w-8 rounded-full"
@@ -83,6 +95,11 @@ export default function Main() {
                     />
                   </button>
                 </div>
+                { toggleMenu && (
+                  <ul className="absolute cursor-pointer hover:bg-gray-100 right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
+                    <li onClick={() => logout() } className="block px-4 py-2 text-sm text-gray-700" role="menuitem"  id="user-menu-item-2">Sair</li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>
