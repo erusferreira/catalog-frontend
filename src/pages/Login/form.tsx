@@ -6,7 +6,7 @@ import { schemaLogin } from "./validator";
 import { LoginInputs } from "@apptypes/loginType";
 import { APIConfig } from "@config/api.config.constant";
 import { http } from "@config/axios.config";
-import { ROUTES } from "routes";
+import { ROUTE_PATHS } from "routes/routes.constant";
 import { localStorageService } from "services/localstorage-service";
 
 export default function Form() {
@@ -36,7 +36,7 @@ export default function Form() {
   const login = (user: any) => {
     const lsService = localStorageService();
     lsService.setToken("user", user.data);
-    return navigate(ROUTES.CATALOG);
+    return navigate(ROUTE_PATHS.CATALOG);
   };
 
   return (
@@ -73,7 +73,7 @@ export default function Form() {
           <div className="text-sm">
             <Link
               className="font-semibold text-indigo-600 hover:text-indigo-500"
-              to={ROUTES.FORGOT_PASSWORD}
+              to={ROUTE_PATHS.FORGOT_PASSWORD}
             >
               Esqueceu a senha?
             </Link>

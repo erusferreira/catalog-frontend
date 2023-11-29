@@ -1,29 +1,43 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
+import App from "App";
+import Main from "./pages/Main";
+import { ROUTE_PATHS } from "routes/routes.constant";
+import CatalogAdmin from "remoteApp/CatalogAdmin";
 import "./index.css";
-import { ROUTES } from "routes";
-import App from "./App";
-import Main from "@pages/Main";
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.REGISTER,
-    element: <div>Cadastro do usuário</div>,
+    path: ROUTE_PATHS.REGISTER,
+    element: <div>Cadastro do usuário</div>
   },
   {
-    path: ROUTES.LOGIN,
+    path: ROUTE_PATHS.LOGIN,
     element: <App />,
   },
   {
-    path: ROUTES.CATALOG,
-    element: <Main />,
-  },
-  {
-    path: ROUTES.FORGOT_PASSWORD,
+    path: ROUTE_PATHS.FORGOT_PASSWORD,
     element: <div>Esqueci minha senha</div>,
   },
+  {
+    element: <Main />,
+    children: [
+      {
+        path: ROUTE_PATHS.CATALOG,
+        element: <CatalogAdmin/>
+      },
+      {
+        path: ROUTE_PATHS.MERCHANT,
+        element: <div>Merchant Frontend</div>,
+      }
+    ]
+  },
+  {
+    path: "*",
+    element: <Navigate to={ROUTE_PATHS.LOGIN} replace  />  
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

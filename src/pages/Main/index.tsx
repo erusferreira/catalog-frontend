@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import CatalogAdmin from "remoteApp/CatalogAdmin";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useToken, useAuthorized } from "remoteApp/store";
 
 import { localStorageService } from "services/localstorage-service";
-import { ROUTES } from "routes";
+import { ROUTE_PATHS } from "routes/routes.constant";
 import { useState } from "react";
 
 export default function Main() {
@@ -13,13 +12,13 @@ export default function Main() {
   const [ , setToken ] = useToken();
   const [ authorized ] = useAuthorized();
   const lsService = localStorageService();
-
+  
   try {
     const savedToken = lsService.getToken('user')
     if (savedToken) {
       setToken(savedToken.token);
     } else {
-      return navigate(ROUTES.LOGIN);
+      return navigate(ROUTE_PATHS.LOGIN);
     }
   } catch (error) {
     throw new Error(`Erro ao carregar catálogos: ${error}`);
@@ -27,13 +26,13 @@ export default function Main() {
 
   const logout = () => {
     lsService.clear();
-    navigate(ROUTES.LOGIN)
+    navigate(ROUTE_PATHS.LOGIN)
   }
 
   if (!authorized) {
     logout();
   }
-
+ 
   return (
     <>
       <nav className="bg-gray-800">
@@ -60,19 +59,14 @@ export default function Main() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <a
-                    href="#"
-                    className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                    aria-current="page"
-                  >
+                  <Link className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                        to={ROUTE_PATHS.CATALOG}>
                     Catálogo
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                  >
+                  </Link>
+                  <Link className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                        to={ROUTE_PATHS.MERCHANT}>
                     Loja
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -124,7 +118,7 @@ export default function Main() {
           </div>
         </div>
       </nav>
-      <CatalogAdmin/>
+      <Outlet />
     </>
   );
 }
