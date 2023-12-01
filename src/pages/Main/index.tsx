@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useToken, useAuthorized } from "remoteApp/store";
+import { useToken, useAuthorized } from "adm/store";
 
 import { localStorageService } from "services/localstorage-service";
 import { ROUTE_PATHS } from "routes/routes.constant";

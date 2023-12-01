@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import App from "App";
 import Main from "./pages/Main";
 import { ROUTE_PATHS } from "routes/routes.constant";
-import CatalogAdmin from "remoteApp/CatalogAdmin";
+import CatalogAdmin from "adm/CatalogAdmin";
+import CatalogMerchant from "merc/CatalogMerchant";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATHS.MERCHANT,
-        element: <div>Merchant Frontend</div>,
+        element: <CatalogMerchant/>
       }
     ]
   },
