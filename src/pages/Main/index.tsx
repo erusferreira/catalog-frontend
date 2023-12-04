@@ -1,5 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useToken, useAuthorized } from "adm/store";
+
+import { useAdminToken, useAuthorized } from "admin/store";
+import { useMerchantToken } from "merchant/store";
 
 import { localStorageService } from "services/localstorage-service";
 import { ROUTE_PATHS } from "routes/routes.constant";
@@ -9,14 +11,18 @@ export default function Main() {
 
   const [ toggleMenu, setToggleMenu ] = useState(false);
   const navigate = useNavigate();
-  const [ , setToken ] = useToken();
+  
+  const [, setAdminToken ] = useAdminToken();
+  const [, setMerchantToken ] = useMerchantToken();
+
   const [ authorized ] = useAuthorized();
   const lsService = localStorageService();
   
   try {
     const savedToken = lsService.getToken('user')
     if (savedToken) {
-      setToken(savedToken.token);
+      setAdminToken(savedToken.token);
+      setMerchantToken(savedToken.token);
     } else {
       return navigate(ROUTE_PATHS.LOGIN);
     }

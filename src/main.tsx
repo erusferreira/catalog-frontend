@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import App from "App";
 import Main from "./pages/Main";
 import { ROUTE_PATHS } from "routes/routes.constant";
-import CatalogAdmin from "adm/CatalogAdmin";
-import CatalogMerchant from "merc/CatalogMerchant";
+import CatalogAdmin from "admin/CatalogAdmin";
+import CatalogMerchant from "merchant/CatalogMerchant";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -27,11 +27,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: ROUTE_PATHS.CATALOG,
-        element: <CatalogAdmin/>
+        element: <CatalogAdmin />
       },
       {
         path: ROUTE_PATHS.MERCHANT,
-        element: <CatalogMerchant/>
+        element: <CatalogMerchant />
       }
     ]
   },

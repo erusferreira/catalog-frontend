@@ -1,3 +1,6 @@
-declare module "adm/CatalogAdmin";
-declare module "merc/CatalogMerchant";
-declare module "adm/store";
+declare module "admin/CatalogAdmin";
+declare module "admin/store";
+
+declare module "merchant/CatalogMerchant";
+declare module "merchant/store";
+
