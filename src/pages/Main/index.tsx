@@ -2,9 +2,10 @@ import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import { localStorageService } from "services/localstorage-service";
-import { useAdminToken, useAuthorized } from "admin/store";
 import { ROUTE_PATHS } from "routes/routes.constant";
-import { useMerchantToken } from "merchant/store";
+
+import {  useAuthorized, useAdminToken, useAdminUserMerchant } from "admin/store";
+import { useMerchantToken, useMerchantUserMerchant } from "merchant/store";
 
 export default function Main() {
 
@@ -15,16 +16,20 @@ export default function Main() {
   const currentPath = location.pathname;
   
   const [, setAdminToken ] = useAdminToken();
+  const [, setAdminUserMerchant ] = useAdminUserMerchant();
   const [, setMerchantToken ] = useMerchantToken();
+  const [, setMerchantUserMerchant ] = useMerchantUserMerchant();
 
   const [ authorized ] = useAuthorized();
   const lsService = localStorageService();
   
   try {
-    const savedToken = lsService.getToken('user')
-    if (savedToken) {
-      setAdminToken(savedToken.token);
-      setMerchantToken(savedToken.token);
+    const savedUser = lsService.getToken('user')
+    if (savedUser) {
+      setAdminToken(savedUser.token);
+      setMerchantToken(savedUser.token);
+      setAdminUserMerchant(savedUser.merchant);
+      setMerchantUserMerchant(savedUser.merchant);
     } else {
       return navigate(ROUTE_PATHS.LOGIN);
     }
