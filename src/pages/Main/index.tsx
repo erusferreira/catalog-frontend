@@ -4,8 +4,8 @@ import { useState } from "react";
 import { localStorageService } from "services/localstorage-service";
 import { ROUTE_PATHS } from "routes/routes.constant";
 
-import {  useAuthorized, useAdminToken, useAdminUserMerchant } from "admin/store";
-import { useMerchantToken, useMerchantUserMerchant } from "merchant/store";
+import {  useAdminAuthorized, useAdminToken, useAdminUserMerchant } from "admin/store";
+import { useMerchantAuthorized, useMerchantToken, useMerchantUserMerchant } from "merchant/store";
 
 export default function Main() {
 
@@ -20,7 +20,9 @@ export default function Main() {
   const [, setMerchantToken ] = useMerchantToken();
   const [, setMerchantUserMerchant ] = useMerchantUserMerchant();
 
-  const [ authorized ] = useAuthorized();
+  const [ authorizedAdmin ] = useAdminAuthorized();
+  const [ authorizedMerchant ] = useMerchantAuthorized();
+
   const lsService = localStorageService();
   
   try {
@@ -28,6 +30,7 @@ export default function Main() {
     if (savedUser) {
       setAdminToken(savedUser.token);
       setMerchantToken(savedUser.token);
+
       setAdminUserMerchant(savedUser.merchant);
       setMerchantUserMerchant(savedUser.merchant);
     } else {
@@ -42,7 +45,7 @@ export default function Main() {
     window.location.href = "/";
   }
 
-  if (!authorized) {
+  if (!authorizedAdmin || !authorizedMerchant) {
     logout();
   }
  
