@@ -8,6 +8,7 @@ import { APIConfig } from "@config/api.config.constant";
 import { http } from "@config/axios.config";
 import { ROUTE_PATHS } from "routes/routes.constant";
 import { localStorageService } from "services/localstorage-service";
+import { useState } from "react";
 
 export default function Form() {
 
@@ -20,6 +21,7 @@ export default function Form() {
   });
 
   const navigate = useNavigate();
+  const [ invalidLogin, setInvalidLogin ] = useState('');
 
   const onSubmit: SubmitHandler<LoginInputs> = async (payload) => {
     try {
@@ -29,6 +31,7 @@ export default function Form() {
         login({ data });
       }
     } catch (error) {
+      setInvalidLogin('Email ou senha inválida!');
       throw new Error(`Erro ao realizar login: ${error}`);
     }
   };
@@ -90,6 +93,7 @@ export default function Form() {
           {errors.password?.message && (
             <span className="mt-3 text-xs">{errors.password?.message}</span>
           )}
+          {invalidLogin && <span className="mt-3 text-xs">{invalidLogin}</span>}
         </div>
       </div>
 

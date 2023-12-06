@@ -1,16 +1,18 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
-
-import { useAdminToken, useAuthorized } from "admin/store";
-import { useMerchantToken } from "merchant/store";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 import { localStorageService } from "services/localstorage-service";
+import { useAdminToken, useAuthorized } from "admin/store";
 import { ROUTE_PATHS } from "routes/routes.constant";
-import { useState } from "react";
+import { useMerchantToken } from "merchant/store";
 
 export default function Main() {
 
-  const [ toggleMenu, setToggleMenu ] = useState(false);
   const navigate = useNavigate();
+  const [ toggleMenu, setToggleMenu ] = useState(false);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
   
   const [, setAdminToken ] = useAdminToken();
   const [, setMerchantToken ] = useMerchantToken();
@@ -44,7 +46,7 @@ export default function Main() {
       <nav className="bg-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                 <div className="h-8 w-auto">
                   <svg
@@ -65,11 +67,11 @@ export default function Main() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <Link className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  <Link className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.CATALOG ? ' bg-gray-900' : '')} 
                         to={ROUTE_PATHS.CATALOG}>
                     Catálogo
                   </Link>
-                  <Link className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  <Link className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.MERCHANT ? ' bg-gray-900' : '')}
                         to={ROUTE_PATHS.MERCHANT}>
                     Loja
                   </Link>
