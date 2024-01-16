@@ -6,7 +6,7 @@ export const localStorageService = () => {
 
   const getToken = (key: string) => {
     if (isTokenSaved(key)) {
-      return JSON.parse(localStorage.getItem(key));
+      return JSON.parse(localStorage.getItem(key) || '');
     }
   }
 

@@ -7,7 +7,7 @@ import { ROUTE_PATHS } from "routes/routes.constant";
 import {  useAdminAuthorized, useAdminToken, useAdminUserMerchant } from "admin/store";
 import { useMerchantAuthorized, useMerchantToken, useMerchantUserMerchant } from "merchant/store";
 
-export default function Main() {
+export default function Main(): JSX.Element {
 
   const navigate = useNavigate();
   const [ toggleMenu, setToggleMenu ] = useState(false);
@@ -34,7 +34,8 @@ export default function Main() {
       setAdminUserMerchant(savedUser.merchant);
       setMerchantUserMerchant(savedUser.merchant);
     } else {
-      return navigate(ROUTE_PATHS.LOGIN);
+      navigate(ROUTE_PATHS.LOGIN);
+      return <></>
     }
   } catch (error) {
     throw new Error(`Erro ao carregar catálogos: ${error}`);
