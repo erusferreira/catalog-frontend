@@ -7,8 +7,8 @@ dotenv.config()
 
 const envMode = process.env.VITE_ENV_MODE;
 const domainAddress = process.env.DOMAIN_ADDRESS;
-const remoteAdminPath = process.env.VITE_MICROFRONTEND_ADMIN_PATH;
-const remoteMerchantPath = process.env.VITE_MICROFRONTEND_MERCHANT_PATH;
+const remoteAdminPath = process.env.MICROFRONTEND_ADMIN_PATH;
+const remoteMerchantPath = process.env.MICROFRONTEND_MERCHANT_PATH;
 
 // https://vitejs.dev/config/
 export default defineConfig({
