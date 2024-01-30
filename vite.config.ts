@@ -25,7 +25,7 @@ export default defineConfig({
         `${domainAddress}${remoteMerchantPath}` :
           "http://localhost:5003/assets/remoteEntry.js",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "react-router-dom"],
     }),
   ],
   build: {
