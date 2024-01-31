@@ -41,3 +41,4 @@ dist-ssr
 .env.test.*
 .env.local
 .env.local.*
+.env.prod

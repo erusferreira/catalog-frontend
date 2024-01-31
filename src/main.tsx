@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-
-import App from "App";
-import Main from "./pages/Main";
-import { ROUTE_PATHS } from "routes/routes.constant";
 import CatalogAdmin from "admin/CatalogAdmin";
 import CatalogMerchant from "merchant/CatalogMerchant";
+
 import "./index.css";
+import App from "App";
+import Main from "./pages/catalog/Main";
+import { ROUTE_PATHS } from "routes/routes.constant";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
     element: <div>Esqueci minha senha</div>,
   },
   {
+    path: ROUTE_PATHS.MAIN,
     element: <Main />,
     children: [
       {

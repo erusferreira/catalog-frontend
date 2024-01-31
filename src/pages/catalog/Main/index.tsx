@@ -1,11 +1,10 @@
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useAdminAuthorized } from "admin/store";
+import { useMerchantAuthorized } from "merchant/store";
 import { localStorageService } from "services/localstorage-service";
 import { ROUTE_PATHS } from "routes/routes.constant";
-
-import {  useAdminAuthorized, useAdminToken, useAdminUserMerchant } from "admin/store";
-import { useMerchantAuthorized, useMerchantToken, useMerchantUserMerchant } from "merchant/store";
 
 export default function Main(): JSX.Element {
 
@@ -14,41 +13,33 @@ export default function Main(): JSX.Element {
 
   const location = useLocation();
   const currentPath = location.pathname;
-  
-  const [, setAdminToken ] = useAdminToken();
-  const [, setAdminUserMerchant ] = useAdminUserMerchant();
-  const [, setMerchantToken ] = useMerchantToken();
-  const [, setMerchantUserMerchant ] = useMerchantUserMerchant();
 
   const [ authorizedAdmin ] = useAdminAuthorized();
   const [ authorizedMerchant ] = useMerchantAuthorized();
 
   const lsService = localStorageService();
-  
-  try {
-    const savedUser = lsService.getToken('user')
-    if (savedUser) {
-      setAdminToken(savedUser.token);
-      setMerchantToken(savedUser.token);
-
-      setAdminUserMerchant(savedUser.merchant);
-      setMerchantUserMerchant(savedUser.merchant);
-    } else {
-      navigate(ROUTE_PATHS.LOGIN);
-      return <></>
-    }
-  } catch (error) {
-    throw new Error(`Erro ao carregar catálogos: ${error}`);
-  }
 
   const logout = () => {
     lsService.clear();
     window.location.href = "/";
   }
 
-  if (!authorizedAdmin || !authorizedMerchant) {
-    logout();
-  }
+  useEffect(() => {
+    (async () => {
+      try {
+        const savedUser = lsService.getToken('user');
+        if (!savedUser) {
+          navigate(ROUTE_PATHS.LOGIN);
+          return <></>
+        }
+      } catch (error) {
+        throw new Error(`Erro ao carregar catálogos: ${error}`);
+      }
+      if (!authorizedAdmin || !authorizedMerchant) {
+        logout();
+      }
+    })()
+  }, []);
  
   return (
     <>
@@ -77,8 +68,11 @@ export default function Main(): JSX.Element {
               <div>
                 <div className="flex space-x-4">
                   <Link className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.CATALOG ? ' bg-gray-900' : '')} 
-                        to={ROUTE_PATHS.CATALOG}>
+                        to='catalog/main'>
                     Catálogo
+                  </Link>
+                  <Link to='catalog/main/detail' className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.CATALOG ? ' bg-gray-900' : '')} >
+                    Detalhes do Catálogo
                   </Link>
                   <Link className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.MERCHANT ? ' bg-gray-900' : '')}
                         to={ROUTE_PATHS.MERCHANT}>
@@ -101,7 +95,7 @@ export default function Main(): JSX.Element {
                   >
                     <img
                       className="h-8 w-8 rounded-full"
-                      src="https://media.licdn.com/dms/image/C4D03AQFRZQoHLjJbzw/profile-displayphoto-shrink_800_800/0/1558408358878?e=1706140800&v=beta&t=Vab9v_iNLxyamvCUVa4Mq0MmcUSsOaig6WNHL3bwdqc"
+                      src="https://media.licdn.com/dms/image/D4D03AQGg9rS8YVMGgw/profile-displayphoto-shrink_800_800/0/1704566529197?e=1712188800&v=beta&t=w23akXOuvCmCRKudDSvQ9-Ms_VBNdAH5Fg7ElIuzZO0"
                       alt=""
                     />
                   </button>
