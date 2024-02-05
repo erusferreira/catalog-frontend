@@ -71,9 +71,6 @@ export default function Main(): JSX.Element {
                         to='catalog/main'>
                     Catálogo
                   </Link>
-                  <Link to='catalog/main/detail' className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.CATALOG ? ' bg-gray-900' : '')} >
-                    Detalhes do Catálogo
-                  </Link>
                   <Link className={" text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" + (currentPath == ROUTE_PATHS.MERCHANT ? ' bg-gray-900' : '')}
                         to={ROUTE_PATHS.MERCHANT}>
                     Loja
